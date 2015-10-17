@@ -1,0 +1,55 @@
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+	
+       splitpoint = partition(alist,first,last)
+
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+
+
+def partition(alist,first,last):
+   global count
+   count += (last - first )
+   pivotvalue = alist[last]
+  
+   leftmark = first
+   rightmark = last-1
+
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and \
+               alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and \
+               rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+
+   temp = alist[last]
+   alist[last] = alist[rightmark]
+   alist[rightmark] = temp
+
+
+   return rightmark
+count = 0
+text_file = open("QuickSort.txt", "r")
+lines = [int(i) for i in text_file.readlines()]
+#another = lines
+#another.sort()
+#print another
+quickSort(lines)
+
+#assert another.sort()==lines, 'Not Sorted'
+
+print count
